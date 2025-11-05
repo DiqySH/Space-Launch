@@ -1,5 +1,5 @@
 import { api } from "@/lib/api";
-import { LaunchesResponse } from "@/modules/api/launch-response";
+import { LaunchesResponse } from "@/modules/api/launch-response-type";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import Countdown from "react-countdown";
