@@ -1,17 +1,18 @@
 import { api } from "@/lib/api";
-import { LaunchesResponse } from "@/modules/api/launch-response-type";
+import { Launch, LaunchesResponse } from "@/modules/api/launch-response-type";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Countdown from "react-countdown";
 import data from "@/demo/data-demo.json";
 import { motion } from "framer-motion";
+import { PreviewCardUpcomingLaunch } from "@/components/ui/card";
 
 const Home = () => {
   // const { data, isLoading, error } = useQuery({
   //   queryKey: ["upcomingLaunches"],
   //   queryFn: async () => {
   //     const res = await api.get<LaunchesResponse>(
-  //       "/launches/upcoming/?limit=10"
+  //       "/launches/upcoming/?limit=10&offset=1"
   //     );
   //     return res.data;
   //   },
@@ -32,40 +33,12 @@ const Home = () => {
 
   return (
     <div className="w-full min-h-screen bg-center flex bg-black flex-col gap-4 p-4 items-center">
-      <h1 className="text-6xl text-white w-full text-center font-thin pt-10 pb-10">
+      <h1 className="text-5xl text-white w-full text-center font-thin pt-10 pb-10">
         Upcoming Space Launches
       </h1>
-      <div className="w-full flex flex-col max-w-300">
+      <div className="w-full flex flex-col max-w-300 pb-20">
         {data?.results.map((i) => (
-          <motion.div
-            className="p-2 bg-fil w-full relative bg-cover bg-center flex max-h-[150px] h-fit gap-2 hover:cursor-pointer"
-            key={i.id}
-            initial={{
-              opacity: 0.5,
-              scale: 0.95,
-              y: 10,
-              borderTop: "1px solid rgba(255, 255, 255, 0.5)",
-            }}
-            whileInView={{
-              opacity: 1,
-              scale: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 0.2,
-            }}
-            whileHover={{
-              borderTop: "1px solid rgba(255, 255, 255, 0.8)",
-            }}
-          >
-            <div className="max-w-[250px] overflow-hidden">
-              <img src={i.image?.image_url} alt="" className="object-cover" />
-            </div>
-            {/* <div className="absolute inset-0 bg-black/25" /> */}
-            <div className="z-10 relative flex flex-col w-full">
-              <span className="text-white font-medium">{i.name}</span>
-            </div>
-          </motion.div>
+          <PreviewCardUpcomingLaunch data={i as Launch} />
         ))}
       </div>
     </div>
