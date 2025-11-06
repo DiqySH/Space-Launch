@@ -9,10 +9,11 @@ const Home = () => {
     queryKey: ["upcomingLaunches"],
     queryFn: async () => {
       const res = await api.get<LaunchesResponse>(
-        "/launches/upcoming/?limit=2"
+        "/launches/upcoming/?limit=10"
       );
       return res.data;
     },
+    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {
@@ -28,13 +29,20 @@ const Home = () => {
   }
 
   return (
-    <div className="w-full min-h-screen bg-center flex gap-2">
+    <div className="w-full min-h-screen bg-center flex bg-black flex-col">
       {data?.results.map((i) => (
-        <div className="border h-fit flex flex-col p-2 max-w-[300px]">
-          <img src={i.image?.image_url} alt="" className="w-full" />
-          <span>{i.name}</span>
-          <Countdown date={i.net} />
-          <span>Status: {i.status.name}</span>
+        <div
+          className="border min-h-screen p-2 bg-fil w-full relative bg-cover bg-center grid place-items-end"
+          style={{
+            backgroundImage: `url(${i.image?.image_url})`,
+          }}
+        >
+          <div className="absolute inset-0 bg-black/25" />
+          <div className="z-10 relative flex flex-col w-full">
+            <span className="text-white text-4xl">{i.name}</span>
+            <Countdown date={i.net} className="text-white" />
+            <span className="text-white">Status: {i.status.name}</span>
+          </div>
         </div>
       ))}
     </div>
