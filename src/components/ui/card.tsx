@@ -3,9 +3,11 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import Countdown from "react-countdown";
 import StatusBadge from "./status-badge";
+import { useNavigate } from "react-router";
 
 export const PreviewCardUpcomingLaunch = ({ data }: { data: Launch }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const navigate = useNavigate();
 
   const status = () => {
     switch (data.status.name) {
@@ -21,6 +23,7 @@ export const PreviewCardUpcomingLaunch = ({ data }: { data: Launch }) => {
       className="p-2 bg-fil w-full relative bg-cover bg-center flex max-h-[150px] h-fit gap-2 hover:cursor-pointer font-roboto-mono"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={() => navigate("/launch/" + data.id)}
       key={data.id}
       initial={{
         opacity: 0.8,

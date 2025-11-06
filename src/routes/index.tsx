@@ -2,6 +2,7 @@ import Home from "@/pages/Home";
 import NotFound from "@/pages/NotFound";
 import { createBrowserRouter } from "react-router";
 import ClientProvider from "@/modules/react-query/provider";
+import LaunchDetails from "@/pages/LaunchDetails";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,11 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/launch/:id",
+        loader: ({ params }) => params.id,
+        element: <LaunchDetails />,
       },
     ],
   },
