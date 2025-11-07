@@ -12,7 +12,7 @@ export const PreviewCardUpcomingLaunch = ({ data }: { data: Launch }) => {
 
   return (
     <motion.div
-      className="p-2 bg-fil w-full relative bg-cover bg-center flex max-h-[150px] h-fit gap-2 hover:cursor-pointer font-roboto-mono"
+      className="p-2 bg-fil w-full relative bg-cover bg-center flex max-h-[150px] h-fit gap-2 hover:cursor-pointer font-roboto-mono min-w-[786px]"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => navigate("/launch/" + data.id)}

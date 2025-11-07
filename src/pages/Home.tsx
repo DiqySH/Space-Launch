@@ -7,15 +7,18 @@ import { PreviewCardUpcomingLaunch } from "@/components/ui/card";
 import { getValidUpcomingLaunch } from "@/utils/get-valid-upcoming-launches";
 import Loading from "@/components/ui/loading";
 import ErrorResponse from "@/components/ui/error";
+import demo from "@/demo/data-demo.json";
 
 const Home = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["upcomingLaunches"],
     queryFn: async () => {
-      const res = await api.get<LaunchesResponse>(
-        "/launches/upcoming/?limit=10&offset=1"
-      );
-      return res.data;
+      // const res = await api.get<LaunchesResponse>(
+      //   "/launches/upcoming/?limit=10&offset=1"
+      // );
+      // return res.data;
+      const res = demo;
+      return res;
     },
     refetchOnWindowFocus: false,
   });
@@ -64,7 +67,7 @@ const Home = () => {
       <h1 className="text-4xl text-white w-full font-thin pt-25 pb-4 px-8">
         Upcoming Space Launches
       </h1>
-      <div className="w-full flex flex-col px-8 pb-20">
+      <div className="w-full flex flex-col px-8 pb-20 overflow-x-scroll">
         {data?.results.map((i) => (
           <PreviewCardUpcomingLaunch data={i as Launch} />
         ))}
