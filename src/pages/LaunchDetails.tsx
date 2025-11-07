@@ -94,7 +94,7 @@ const LaunchDetails = () => {
           </p>
         </div>
       </div>
-      <div className="w-full px-8 flex gap-4">
+      <div className="w-full px-8 flex gap-4 flex-col sm:flex-row">
         <img src={data?.pad.map_image} alt="" className="max-w-[300px]" />
         <div className="font-roboto-mono flex flex-col gap-3">
           <p>PAD NAME: {data?.pad.name}</p>
