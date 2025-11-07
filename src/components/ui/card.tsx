@@ -4,19 +4,11 @@ import { useState } from "react";
 import Countdown from "react-countdown";
 import StatusBadge from "./status-badge";
 import { useNavigate } from "react-router";
+import { getStatus } from "@/utils/get-status";
 
 export const PreviewCardUpcomingLaunch = ({ data }: { data: Launch }) => {
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
-
-  const status = () => {
-    switch (data.status.name) {
-      case "Launch Successful":
-        return "green";
-      default:
-        return "yellow";
-    }
-  };
 
   return (
     <motion.div
@@ -68,7 +60,7 @@ export const PreviewCardUpcomingLaunch = ({ data }: { data: Launch }) => {
           </div>
           <p className="text-white">
             STATUS:{" "}
-            <StatusBadge variant={status()} className="px-1">
+            <StatusBadge variant={getStatus(data)} className="px-1">
               {data.status.name}
             </StatusBadge>
           </p>

@@ -3,8 +3,10 @@ import { Launch, LaunchesResponse } from "@/modules/api/launch-response-type";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import Countdown from "react-countdown";
-// import data from "@/demo/data-demo.json";
 import { PreviewCardUpcomingLaunch } from "@/components/ui/card";
+import { getValidUpcomingLaunch } from "@/utils/get-valid-upcoming-launches";
+import Loading from "@/components/ui/loading";
+import ErrorResponse from "@/components/ui/error";
 
 const Home = () => {
   const { data, isLoading, error } = useQuery({
@@ -23,36 +25,41 @@ const Home = () => {
   }, [data, isLoading, error]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (error) {
-    return <div>Error while fetching</div>;
+    return <ErrorResponse error={error} />;
   }
+
+  const { nextLaunch } = getValidUpcomingLaunch(data?.results as Launch[]);
 
   return (
     <div className="w-full min-h-screen bg-center flex bg-black flex-col gap-4 items-center">
-      <div
-        className="relative w-full min-h-screen bg-center bg-cover grid place-items-end"
-        style={{
-          backgroundImage: `url(${data?.results[1].image?.image_url})`,
-        }}
-      >
-        <div className="absolute inset-0 bg-linear-to-t from-black via-black/30 to-transparent" />
+      {nextLaunch && (
+        <div
+          className="relative w-full min-h-screen bg-center bg-cover grid place-items-end"
+          style={{
+            backgroundImage: `url(${nextLaunch.image?.image_url})`,
+          }}
+        >
+          <div className="absolute inset-0 bg-linear-to-t from-black via-black/30 to-transparent" />
 
-        <div className="relative w-full px-8 text-white flex flex-col pb-25">
-          <Countdown
-            date={data?.results[1].net}
-            className="text-white font-roboto-mono"
-          />
-          <span className="font-bold text-5xl uppercase">
-            {data?.results[1].name}
-          </span>
-          <span className="text-2xl font-roboto-mono">
-            {data?.results[1].mission?.name}
-          </span>
+          <div className="relative w-full px-8 text-white flex flex-col pb-25">
+            <span>NEXT LAUNCH</span>
+            <Countdown
+              date={nextLaunch.net}
+              className="text-white font-roboto-mono"
+            />
+            <span className="font-bold text-5xl uppercase">
+              {nextLaunch.name}
+            </span>
+            <span className="text-2xl font-roboto-mono">
+              {nextLaunch.mission?.name}
+            </span>
+          </div>
         </div>
-      </div>
+      )}
 
       <h1 className="text-4xl text-white w-full font-thin pt-25 pb-4 px-8">
         Upcoming Space Launches
