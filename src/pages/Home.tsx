@@ -7,18 +7,15 @@ import { PreviewCardUpcomingLaunch } from "@/components/ui/card";
 import { getValidUpcomingLaunch } from "@/utils/get-valid-upcoming-launches";
 import Loading from "@/components/ui/loading";
 import ErrorResponse from "@/components/ui/error";
-import demo from "@/demo/data-demo.json";
 
 const Home = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["upcomingLaunches"],
     queryFn: async () => {
-      // const res = await api.get<LaunchesResponse>(
-      //   "/launches/upcoming/?limit=10&offset=1"
-      // );
-      // return res.data;
-      const res = demo;
-      return res;
+      const res = await api.get<LaunchesResponse>(
+        "/launches/upcoming/?limit=10&offset=1"
+      );
+      return res.data;
     },
     refetchOnWindowFocus: false,
   });

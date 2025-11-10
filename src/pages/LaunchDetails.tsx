@@ -7,17 +7,15 @@ import { getStatus } from "@/utils/get-status";
 import { Agency, Launch } from "@/modules/api/launch-response-type";
 import Loading from "@/components/ui/loading";
 import ErrorResponse from "@/components/ui/error";
-import demo from "@/demo/data-demo.json";
+
 const LaunchDetails = () => {
   const launchId = useLoaderData();
 
   const { data, isLoading, error } = useQuery({
     queryKey: [launchId],
     queryFn: async () => {
-      // const res = await api.get("/launches/" + launchId);
-      // return res.data;
-      const res = demo.results.find((i) => i.id === launchId);
-      return res;
+      const res = await api.get("/launches/" + launchId);
+      return res.data;
     },
     refetchOnWindowFocus: false,
   });
